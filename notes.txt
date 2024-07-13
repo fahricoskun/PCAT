@@ -1,0 +1,32 @@
+- Nodemon:
+Her değişiklikten sonra sunucuyu durdurup tekrar başlatmak zorundayız, bundan kurtulmak
+için Nodemon kullanıyoruz. package.json dosyasında devDependecies kısmına eklenir çünkü
+uygulamanın çalışması için zorunlu değildir, çalıştırılma şekliyle ilgilidir. Geliştirme
+durumunda kullanılır.
+
+--------------------------------------------------------------------------------
+
+-Middlewear:
+request ve response arasında bulunan her şey Middlewear'dir. Bir Middlewear çalıştıktan sonra
+diğerinin çalışabilmesi için next() metodu kullanılır. Middlewear'ler sırayla çalışır.
+
+Örnek kodlar:
+***********************************************
+const myLogger = (req, res, next) => {
+    console.log("Middleware Log 1");
+    //!next -> bir sonraki middleware'e ilerlemesi için next yazılır
+    next();
+}
+
+const myLogger2 = (req, res, next) => {
+    console.log("Middleware Log 1");
+    //!next -> bir sonraki middleware'e ilerlemesi için next yazılır
+    next();
+}
+***********************************************
+
+-----------------------------------------------------------
+res.sendFile(path.resolve(__dirname, "temp/index.html"))
+
+path.resolve dosya yolunu çözümlemek için kullandık ana dizinde temp klasörünün içindeki
+index.html seçildi. _dirname ise proje klasörümümn olduğu yer demek.
