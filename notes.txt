@@ -7,8 +7,18 @@ durumunda kullanılır.
 --------------------------------------------------------------------------------
 
 -Middlewear:
-request ve response arasında bulunan her şey Middlewear'dir. Bir Middlewear çalıştıktan sonra
+Biz bir istekte bulunuyoruz ve buna karşılık bir cevap istiyoruz. İşte bu request - response döngüsünün
+içerisindeki görevi olan her fonksiyona middleware denir. Yani herşey request ve responsun 'middle'ında
+ortasında yapılır.request ve response arasında bulunan her şey Middlewear'dir. Bir Middlewear çalıştıktan sonra
 diğerinin çalışabilmesi için next() metodu kullanılır. Middlewear'ler sırayla çalışır.
+
+Middleware kullanarak aşağıdaki işlemleri gerçekleştirebiliriz.
+
+- Herhangi bir fonksiyon çalıştırılabiliriz.
+- Request ve Response nesnelerini değiştirebiliriz.
+- Request - Response döngüsü sonlandırılabilir.
+- next() metodu ile sonraki middleware çağırılabilinir.
+
 
 Örnek kodlar:
 ***********************************************
@@ -30,3 +40,46 @@ res.sendFile(path.resolve(__dirname, "temp/index.html"))
 
 path.resolve dosya yolunu çözümlemek için kullandık ana dizinde temp klasörünün içindeki
 index.html seçildi. _dirname ise proje klasörümümn olduğu yer demek.
+-----------------------------------------------------------
+
+EJS Template Engine
+
+EJS, Embedded Java Script kelimelerinden oluşur ve bize saf Javascript kodlarıkullanmamıza imkan 
+verirken aynı zamanda çalışmamıza ait değişen içerikleri de kullanabiliriz.EJS modülü template
+dosyaları görebilmek için varsayılan olarak views klasörünün içerisindeki .ejs uzantılı dosyalara
+bakar. Bu ne denle temp dosyamızın ismini views olarak değiştiriyoruz. Videws klasörü içerisindeki
+tüm .html uzantılarını .ejs olarak değiştiriyoruz. Uygulamamızdaki .get metodunu düzenlersek,
+bu şekilde '/' isteğine karşılık index.ejs dosyasını render ederiz.
+
+-------------------------------------------------------------
+
+Mongoose
+
+Mongoose bir ODM aracıdır yani Object Document Mapped. Schema nesnesini alıp (şablon) bu şablona göre
+oluşturduğu modeller yardımıyla verileri compass içindeki photos kısmına map ediyor.
+
+--------------------------------------------------------------
+
+urlencoded
+
+url'deki datayı okumamızı sağlar. 
+
+extended: true
+
+<form method="post">
+  <input name="user[name]" value="John">
+  <input name="user[age]" value="30">
+</form>
+
+Bu, req.body nesnesinde şöyle görünecektir:
+
+{
+  "user": {
+    "name": "John",
+    "age": "30"
+  }
+}
+Bu nedenle, extended: true seçeneği daha karmaşık veri yapılarının ayrıştırılmasını sağlar
+ve form verilerinin daha esnek bir şekilde işlenmesine olanak tanır.
+
+-----------------------------------------------------------------
