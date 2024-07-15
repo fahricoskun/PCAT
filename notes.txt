@@ -83,3 +83,9 @@ Bu nedenle, extended: true seçeneği daha karmaşık veri yapılarının ayrı�
 ve form verilerinin daha esnek bir şekilde işlenmesine olanak tanır.
 
 -----------------------------------------------------------------
+
+method-override
+
+edit.ejs sayfasında form içinde action kısmında ?_method=PUT kullandık. PUT methodunu veriyi güncellemek için
+kullanılıyor fakat her tarayıcı desteklemediği için aslında biz bunu POST methodu ile yapıyoruz ancak
+method-override ile PUT methodunu simüle ediyoruz. Silmek istersek de PUT değil DELETE yazıyoruz.
