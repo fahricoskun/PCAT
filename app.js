@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const methodOverride = require("method-override");
+require("dotenv").config();
 
 const ejs = require("ejs");
 
@@ -11,7 +12,16 @@ const pageController = require("./controllers/pageControllers");
 const app = express();
 
 //connect DB
-mongoose.connect("mongodb://localhost/pcat-test-db");
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster.mskswzm.mongodb.net/?retryWrites=true&w=majority&appName=pcat-app-db`
+  )
+  .then(() => {
+    console.log("DB CONNECTED!");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Template Engine
 app.set("view engine", "ejs");
@@ -39,9 +49,8 @@ app.get("/about", pageController.getAboutPage);
 app.get("/add", pageController.getAddPage);
 app.get("/photos/edit/:id", pageController.getEditPage);
 
-
 //Sunucuda başlatma
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Sunucu ${port} portunda başlatıldı...`);

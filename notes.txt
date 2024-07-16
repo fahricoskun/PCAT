@@ -89,3 +89,11 @@ method-override
 edit.ejs sayfasında form içinde action kısmında ?_method=PUT kullandık. PUT methodunu veriyi güncellemek için
 kullanılıyor fakat her tarayıcı desteklemediği için aslında biz bunu POST methodu ile yapıyoruz ancak
 method-override ile PUT methodunu simüle ediyoruz. Silmek istersek de PUT değil DELETE yazıyoruz.
+
+------------------------------------------------------------------
+
+skip():
+
+skip fonksiyonu ile yaptığımız şudur. Eğer 2.sayfadaysak 2 - 1 yapıp photosPerPage ile çarpar yani 3 döndürür 
+bunun mantığı şudur. İlk sayfada 3 adet fotoğraf gösterdik yani 1, 2 ve 3 nolu fotoğraflar gösterdik, bunları atla der.
+Eğer page = 3 ise (page - 1) yapıp 2 bulur sonra da photosPerPage ile çarpar ve 6 bulur. Yani ilk 6 fotoğrafı atla skip et. 

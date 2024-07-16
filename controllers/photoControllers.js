@@ -5,10 +5,25 @@ const fs = require("fs");
 //! sıraladık başına - koyduk
 //? bütün fotoğrafları aldık
 exports.getAllPhotos = async (req, res) => {
-  const photos = await Photo.find({}).sort("-dateCreated");
+
+  const page = req.query.page || 1; //!kullanıcının hangi sayfada olduğunu alırız, eğer page değeri yoksa ilk sayfadadır deriz yani 1
+  const photosPerPage = 3; //! her pagede kaç foto gösterelim 
+
+  const totalPhotos = await Photo.find().countDocuments(); //! veritabanımızda kaç foto varsa onu döndürür
+  const photos = await Photo.find({})
+  .sort("-dateCreated")
+  .skip((page - 1) * photosPerPage) //! notlara bak -skip()
+  .limit(photosPerPage) //!her sayfada kaç gösterilmesini isteriz onu belirledik limit ile
+
   res.render("index", {
-    photos,
+    photos: photos,
+    current: page,
+    pages: Math.ceil(totalPhotos / photosPerPage) //! çıkan sonucu bir üste yuvarlar 2,5 ise 3
   });
+  // const photos = await Photo.find({}).sort("-dateCreated");
+  // res.render("index", {
+  //   photos,
+  // });
 };
 
 //! req.params ile "/photos/:id" burada gönderilen id'yi yakaladık
@@ -28,7 +43,7 @@ exports.createPhoto = async (req, res) => {
     fs.mkdirSync(uploadDir);
   }
 
-  //!req.files ile yüklediğim göresel bilgilerine ulaşabilirim
+  //!req.files ile yüklediğim görsel bilgilerine ulaşabilirim
   let uploadedImage = req.files.image;
 
   //! public klasörünün içinde upload şeklinde bir klasör olmasını istiyorum ve bu uploadPath yüklediğim resmin yolunu tutacak
